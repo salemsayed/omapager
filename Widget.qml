@@ -12,6 +12,7 @@
 // on screen.
 
 import QtQuick
+import "PrivateService.js" as PrivateService
 import QtQuick.Controls
 import Quickshell
 import Quickshell.Io
@@ -20,11 +21,12 @@ import qs.Ui
 
 BarWidget {
   id: pager
+  property var sharedService: null
   moduleName: "njpatel.omapager"
 
   // The daemon, if it is up. Everything that reads it degrades to empty rather
   // than breaking the bar.
-  readonly property var service: bar && bar.shell ? bar.shell.serviceFor("njpatel.omapager") : null
+  readonly property var service: sharedService || (bar && bar.shell ? bar.shell.serviceFor("njpatel.omapager") : null)
   readonly property bool silenced: service ? service.doNotDisturb : false
 
   // liveSnoozes() reads a plain map, which nothing re-evaluates on its own, so
@@ -91,7 +93,7 @@ BarWidget {
 
   onSettingsChanged: applySettings()
   onServiceChanged: applySettings()
-  Component.onCompleted: applySettings()
+  Component.onCompleted: { PrivateService.subscribe(pager); applySettings() }
 
   // ------------------------------------------------------------- looks
   readonly property color panelFg: bar ? bar.foreground : Color.foreground
@@ -1012,4 +1014,5 @@ BarWidget {
       anchors.verticalCenter: parent.verticalCenter
     }
   }
+  Component.onDestruction: PrivateService.unsubscribe(pager)
 }

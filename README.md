@@ -1,3 +1,5 @@
+> This is the salemsayed fork, including notification font/layout improvements and Omarchy 4.0.3 custom-bar compatibility. It retains the `njpatel.omapager` plugin ID.
+
 <img src="assets/title.png" width="1266" alt="Omapager">
 
 <!--
@@ -93,7 +95,7 @@ to the site's own icon, in dark and light variants to suit the theme.
 ## Install
 
 ```bash
-git clone https://github.com/njpatel/omapager.git \
+git clone https://github.com/salemsayed/omapager.git \
   ~/.config/omarchy/plugins/njpatel.omapager
 ```
 

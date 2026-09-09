@@ -1,4 +1,5 @@
 // Omapager - notifications for Omarchy.
+import "PrivateService.js" as PrivateService
 //
 // This file IS the notification daemon: Quickshell's NotificationServer owns
 // org.freedesktop.Notifications, so omarchy.notifications must be listed in
@@ -1419,6 +1420,7 @@ Item {
   Process { id: tidyProc; running: false; command: [service.storeBin, "tidy"] }
 
   Component.onCompleted: {
+    PrivateService.publish(service)
     restoreProc.running = true
     quietRestoreProc.running = true
     tidyProc.running = true
@@ -1960,4 +1962,5 @@ Item {
       }
     }
   }
+  Component.onDestruction: PrivateService.release(service)
 }
